@@ -46,11 +46,12 @@ if ! command -v go > /dev/null 2>&1; then
         response=$(curl -s -L --connect-timeout 5 --max-time 5 --write-out "%{http_code}" -o "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" "https://go.dev/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz")
 
 if [ $response -eq 200 ]; then
-         sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
+         sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"
         echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
         echo 'export GOPATH=$HOME/go' >> ~/.bashrc
         echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
         source ~/.bashrc
+         rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
 else
   rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
   if [ "$(uname)" == "Linux" ]; then
