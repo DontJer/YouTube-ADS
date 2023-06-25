@@ -42,22 +42,38 @@ if ! command -v go > /dev/null 2>&1; then
         fi
 
         latest_version=$(curl -s https://go.dev/VERSION?m=text)
-        wget "https://golang.org/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"
 
-        sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
+        response=$(curl -L --connect-timeout 5 --max-time 5 --write-out "%{http_code}" -o "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" "https://go.dev/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz")
 
+if [ $response -eq 200 ]; then
+         sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
         echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
         echo 'export GOPATH=$HOME/go' >> ~/.bashrc
         echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
         source ~/.bashrc
-
+else
+  if [ "$(uname)" == "Linux" ]; then
+      if [ -x "$(command -v apt)" ]; then
+        sudo apt update -y > /dev/null 2>&1
+        sudo apt install golang -y > /dev/null 2>&1
+    elif [ -x "$(command -v yum)" ]; then
+        sudo yum install golang -y > /dev/null 2>&1
+    elif [ -x "$(command -v pacman)" ]; then
+        sudo pacman -S --noconfirm go > /dev/null 2>&1
+    else
+      echo "Unsupported package manager. Please install Go manually."
+      exit 1
+    fi
+  else
+    echo "Unsupported operating system. Please install Go manually."
+    exit 1
+  fi
+fi
         if ! command -v go > /dev/null 2>&1; then
             echo "Failed to install Go. Please install manually."
             exit 1
         fi
-
         echo "Go has been successfully installed."
-
 fi
 cd domain-list-community || exit
 echo 'Installing project dependencies'
