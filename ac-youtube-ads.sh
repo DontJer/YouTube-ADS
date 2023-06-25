@@ -6,7 +6,8 @@ mkdir -p "/usr/local/share/xray" > /dev/null 2>&1
 echo 'The necessary folders were created successfully'
 
 echo 'Downloading the list of YouTube ads hosts'
-curl -s -o "$current_dir/data/temp-YouTube-ADS" https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
+curl -s -o "$current_dir/data/temp-YouTube-ADS.txt" https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
+mv "$current_dir/data/temp-YouTube-ADS.txt" "$current_dir/data/temp-YouTube-ADS"
 echo "The download was done successfully"
 
 echo "Removing extra lines..."
