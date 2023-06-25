@@ -32,7 +32,7 @@ fi
 if ! command -v go > /dev/null 2>&1; then
         echo "Go is not installed. Installing..."
 
-        declare -A cpu=( [x86_64]=amd64 [armv7l]=armv6l)
+        declare -A cpu=( [x86_64]=amd64 [armv7l]=armv6l [aarch64]=arm64)
         cpu_arch=$(uname -m)
 
         if [[ ! -v cpu["$cpu_arch"] ]]; then
