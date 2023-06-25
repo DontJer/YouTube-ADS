@@ -26,7 +26,7 @@ fi
 if [ ! -d "domain-list-community" ] || [ -z "$(ls -A domain-list-community)" ]; then
 
 rm -rf domain-list-community > /dev/null 2>&1
-git clone https://github.com/v2fly/domain-list-community.git
+git clone https://github.com/v2fly/domain-list-community.git > /dev/null 2>&1
 fi
 
 if ! command -v go > /dev/null 2>&1; then
