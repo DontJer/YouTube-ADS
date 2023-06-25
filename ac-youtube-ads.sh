@@ -43,7 +43,7 @@ if ! command -v go > /dev/null 2>&1; then
 
         latest_version=$(curl -s https://go.dev/VERSION?m=text)
 
-        response=$(curl -L --connect-timeout 5 --max-time 5 --write-out "%{http_code}" -o "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" "https://go.dev/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz")
+        response=$(curl -s -L --connect-timeout 5 --max-time 5 --write-out "%{http_code}" -o "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" "https://go.dev/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz")
 
 if [ $response -eq 200 ]; then
          sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
@@ -52,6 +52,7 @@ if [ $response -eq 200 ]; then
         echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
         source ~/.bashrc
 else
+  rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
   if [ "$(uname)" == "Linux" ]; then
       if [ -x "$(command -v apt)" ]; then
         sudo apt update -y > /dev/null 2>&1
