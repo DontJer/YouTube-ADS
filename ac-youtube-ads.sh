@@ -42,7 +42,7 @@ if ! command -v go > /dev/null 2>&1; then
         fi
 
         latest_version=$(curl -s https://golang.org/VERSION?m=text)
-        wget "https://golang.org/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
+        wget "https://golang.org/dl/$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"
 
         sudo tar -C /usr/local -xzf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz"  > /dev/null 2>&1
 
