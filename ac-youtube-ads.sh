@@ -51,7 +51,7 @@ if [ $response -eq 200 ]; then
         echo 'export GOPATH=$HOME/go' >> ~/.bashrc
         echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
         source ~/.bashrc
-         rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
+		rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
 else
   rm -rf "$latest_version.linux-${cpu[$cpu_arch]}.tar.gz" > /dev/null 2>&1
   if [ "$(uname)" == "Linux" ]; then
