@@ -1,7 +1,7 @@
 current_dir="$(pwd)"
 
 echo 'Creating the necessary folders'
-mkdir -p "$current_dir/YouTube-ADS/data" > /dev/null 2>&1
+mkdir -p "$current_dir/data" > /dev/null 2>&1
 mkdir -p "/usr/local/share/xray" > /dev/null 2>&1
 echo 'The necessary folders were created successfully'
 
