@@ -2,7 +2,6 @@ current_dir="$(pwd)"
 
 echo 'Creating the necessary folders'
 mkdir -p "$current_dir/data" > /dev/null 2>&1
-mkdir -p "/usr/local/share/xray" > /dev/null 2>&1
 echo 'The necessary folders were created successfully'
 
 echo 'Downloading the list of YouTube ads hosts'
@@ -82,16 +81,16 @@ echo 'Installing project dependencies'
 go mod download > /dev/null 2>&1
 echo 'Project dependencies were successfully installed'
 
-echo 'Creating ac-youtube-ads.dat...'
-go run ./ --datapath="$current_dir/data" --outputname="ac-youtube-ads.dat" --outputdir="/usr/local/share/xray" > /dev/null 2>&1
+echo 'Creating youtube-ads.dat...'
+go run ./ --datapath="$current_dir/data" --outputname="youtube-ads.dat" --outputdir="/usr/local/share/xray" > /dev/null 2>&1
 echo 'ac-youtube-ads.dat successfully created'
 
 echo 'Checking for existence of Crontab...'
 if ! crontab -l | grep -q "ac-youtube-ads.sh"; then
   echo 'Adding Crontab...'
-{ crontab -l -u root; echo "0 */1 * * * /bin/bash $current_dir/ac-youtube-ads.sh >/dev/null 2>&1"; } | crontab -u root -
+{ crontab -l -u root; echo "0 */1 * * * /bin/bash $current_dir/youtube-ads.sh >/dev/null 2>&1"; } | crontab -u root -
   echo 'Crontab added successfully'
 fi
 
 echo "Done"
-echo 'Add "ext:ac-youtube-ads.dat:youtube-ads" to xray_config.json'
+echo 'Add "ext:youtube-ads.dat:youtube-ads" to xray_config.json'
